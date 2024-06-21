@@ -1,0 +1,55 @@
+@import './base.css';
+
+#app {
+  max-width: 370px;
+  margin: 0 auto;
+  font-weight: normal;
+  background-color: #333;
+  border-radius: 30px;
+  border: 3px solid #b8b8b8fb;
+  height: 730px;
+  box-shadow: 0px 5px 20px 0px #e7e7e733;
+}
+
+.screen {
+  margin: 13px 2px;
+  overflow: hidden;
+  border-radius: 15px;
+  position: relative;
+  background-color: white;
+  height: -webkit-fill-available;
+}
+
+.screen::before {
+  content: '';
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  background-color: #646464;
+  border: 1px solid black;
+  border-radius: 50%;
+  left: 50%;
+  top: 0.4em;
+  transform: translateX(-50%);
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+}
+
+.small-container-padding {
+  padding: 10px 5px;
+}
+
+.big-container-padding {
+  padding: 10px 15px;
+}
+
+@media (hover: hover) {
+  /* a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  } */
+}
