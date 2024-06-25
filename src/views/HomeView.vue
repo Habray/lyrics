@@ -1,14 +1,32 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import lyrics from '@/assets/lyrics.json'
 const lyricsData = ref(lyrics)
+const searchText = ref('')
+let filterdSearch = ref([])
+function searchFilter() {
+  if (!isNaN(parseInt(searchText.value))) {
+    filterdSearch.value = lyrics.filter((song) => song.id.replace(/^0+/, '') === searchText.value)
+  } else {
+    const lowerSearchText = searchText.value.toLowerCase()
+    filterdSearch.value = lyrics.filter(
+      (song) =>
+        song.title.toLowerCase().includes(lowerSearchText) ||
+        song.lyrics.toLowerCase().includes(lowerSearchText)
+    )
+  }
+}
+
+onMounted(() => {
+  filterdSearch.value = lyricsData.value
+})
 </script>
 
 <template>
   <div class="filters small-container-padding">
     <div class="search-bar">
-      <form @click.prevent="">
-        <input type="text" name="" id="" placeholder="Search" />
+      <form @keyup.prevent="searchFilter">
+        <input type="text" v-model="searchText" id="" placeholder="Search" />
         <button type="submit">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -27,13 +45,13 @@ const lyricsData = ref(lyrics)
     </div>
     <div class="sorting">
       <p class="total-songs--text">
-        Songs <span>{{ lyricsData.length }}</span>
+        Songs <span>{{ filterdSearch.length }}</span>
       </p>
     </div>
   </div>
   <div class="list-container">
     <ul>
-      <li v-for="song in lyricsData" :key="song.id" class="big-container-padding">
+      <li v-for="song in filterdSearch" :key="song.id" class="big-container-padding">
         <router-link :to="{ name: 'detail', params: { id: song.id } }">
           <div class="songs-number">{{ song.id.replace(/^0+/, '') }}</div>
           <div class="songs-detail">
@@ -42,6 +60,7 @@ const lyricsData = ref(lyrics)
           </div>
         </router-link>
       </li>
+      <p v-if="!filterdSearch.length" class="not-found">No Song Found</p>
     </ul>
   </div>
 </template>
@@ -132,5 +151,10 @@ ul li:hover {
   line-height: normal;
   color: #a8a8a8;
   text-transform: capitalize;
+}
+.not-found {
+  font-size: 16px;
+  color: #e95b5b;
+  text-align: center;
 }
 </style>
