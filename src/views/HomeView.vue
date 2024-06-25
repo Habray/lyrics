@@ -1,108 +1,107 @@
 <script setup>
 import { ref } from 'vue'
-const lyricsData = ref([
-  {
-    id: '001',
-    title: 'Sunset Dreams',
-    tags: ['Dreams', 'Hope', 'Acoustic', 'Folk'],
-    lyrics:
-      'As the sun sets low\nAnd the stars begin to glow\nDreams take flight in the night\nGuided by the moonlight'
-  },
-  {
-    id: '002',
-    title: 'Whispering Winds',
-    tags: ['Nature', 'Calm', 'Instrumental', 'Ambient'],
-    lyrics:
-      'Whispering winds through the trees\nCarrying tales on the breeze\nSoftly spoken, secrets shared\nIn the quiet evening air'
-  },
-  {
-    id: '003',
-    title: 'Ocean Waves',
-    tags: ['Sea', 'Relaxation', 'Instrumental', 'Calm'],
-    lyrics:
-      "Waves crashing on the shore\nA melody we can't ignore\nRhythmic dance, ebb and flow\nNature's song, a soothing show"
-  },
-  {
-    id: '004',
-    title: 'Mountain High',
-    tags: ['Adventure', 'Inspiration', 'Acoustic', 'Folk'],
-    lyrics:
-      'Climbing mountains, reaching high\nTouch the clouds, kiss the sky\nEvery step, a journey new\nWith the peak in clear view'
-  },
-  {
-    id: '005',
-    title: 'City Lights',
-    tags: ['Urban', 'Night', 'Pop', 'Dance'],
-    lyrics:
-      'City lights, shining bright\nNeon signs, in the night\nHeartbeat quickens with the beat\nDancing in the busy street'
-  },
-  {
-    id: '006',
-    title: 'Rainy Day',
-    tags: ['Rain', 'Relaxation', 'Instrumental', 'Ambient'],
-    lyrics:
-      'Raindrops fall, soft and light\nCreating music through the night\nPitter-patter on the ground\nA soothing, calming sound'
-  },
-  {
-    id: '007',
-    title: 'Summer Breeze',
-    tags: ['Summer', 'Relaxation', 'Acoustic', 'Folk'],
-    lyrics:
-      'Summer breeze, warm and kind\nMemories in the sunshine\nLazy days and starry nights\nEverything feels so right'
-  },
-  {
-    id: '008',
-    title: 'Under the Stars',
-    tags: ['Night', 'Calm', 'Acoustic', 'Folk'],
-    lyrics:
-      'Under the stars, we find our place\nIn the quiet, in the space\nWhispers of the universe\nIn the silence, we immerse'
-  },
-  {
-    id: '009',
-    title: 'Forest Path',
-    tags: ['Nature', 'Adventure', 'Acoustic', 'Folk'],
-    lyrics:
-      "Walking down the forest path\nLeaves crunch softly, nature's bath\nBirds sing sweetly, all around\nIn this haven, peace is found"
-  },
-  {
-    id: '010',
-    title: "Journey's End",
-    tags: ['Journey', 'Hope', 'Acoustic', 'Folk'],
-    lyrics:
-      'Every road leads to an end\nWhere the heart and spirit mend\nLessons learned and stories told\nIn our hearts, we hold them bold'
-  }
-])
+import lyrics from '@/assets/lyrics.json'
+const lyricsData = ref(lyrics)
 </script>
 
 <template>
+  <div class="filters small-container-padding">
+    <div class="search-bar">
+      <form @click.prevent="">
+        <input type="text" name="" id="" placeholder="Search" />
+        <button type="submit">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            x="0px"
+            y="0px"
+            width="30"
+            height="30"
+            viewBox="0 0 50 50"
+          >
+            <path
+              d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z"
+            ></path>
+          </svg>
+        </button>
+      </form>
+    </div>
+    <div class="sorting">
+      <p class="total-songs--text">
+        Songs <span>{{ lyricsData.length }}</span>
+      </p>
+    </div>
+  </div>
   <div class="list-container">
     <ul>
       <li v-for="song in lyricsData" :key="song.id" class="big-container-padding">
-        <div class="songs-number">{{ song.id }}</div>
-        <div class="songs-detail">
-          <h4 class="songs-title">{{ song.title }}</h4>
-          <p class="songs-description">{{ song.tags[0] }}</p>
-        </div>
+        <router-link :to="{ name: 'detail', params: { id: song.id } }">
+          <div class="songs-number">{{ song.id.replace(/^0+/, '') }}</div>
+          <div class="songs-detail">
+            <h4 class="songs-title">{{ song.title }}</h4>
+            <p class="songs-description">{{ song.tags[0] }}</p>
+          </div>
+        </router-link>
       </li>
     </ul>
   </div>
 </template>
 
 <style scoped>
+.filters {
+  background-color: var(--secondary-bg);
+}
+
+.search-bar form {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+.search-bar form input {
+  flex: 1;
+  padding: 15px 10px;
+  border-radius: 8px;
+  border: 0;
+  font-size: 18px;
+}
+.search-bar form button {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 100%;
+  border: 0;
+  background-color: transparent;
+}
+.sorting {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 5px 0;
+}
+
+.total-songs--text {
+  font-size: 16px;
+  color: #a8a8a8;
+}
+
+.total-songs--text span {
+  font-size: 20px;
+  font-weight: 600;
+  color: #5ca460;
+}
 .list-container {
   background-color: var(--primary-bg);
   overflow-y: scroll;
   scrollbar-width: none;
-  height: 460px;
+  height: 485px;
 }
 ul {
   list-style: none;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
-ul li {
+ul li a {
   display: grid;
   align-items: center;
   grid-template-columns: 1fr 4fr;
@@ -120,6 +119,7 @@ ul li:hover {
   border-radius: 50%;
   font-size: 24px;
   font-weight: 600;
+  color: var(--primary-bg);
 }
 .songs-detail .songs-title {
   font-size: 20px;
