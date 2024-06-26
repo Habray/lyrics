@@ -2,6 +2,8 @@
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import lyrics from '@/assets/lyrics.json'
+import SongNumberComponent from '@/components/SongNumberComponent.vue'
+import SongTitleComponent from '@/components/SongTitleComponent.vue'
 
 const route = useRoute()
 const song = reactive({ id: '', title: '', tags: [], lyrics: '' })
@@ -21,8 +23,8 @@ const processedText = computed(() => {
 <template>
   <div class="songs-detail">
     <div class="song-meta big-container-padding">
-      <div class="song-number">{{ song.id.replace(/^0+/, '') }}</div>
-      <h4 class="song-title">{{ song.title }}</h4>
+      <SongNumberComponent :id="song.id" />
+      <SongTitleComponent :title="song.title" />
     </div>
     <div class="song-lyrics big-container-padding">
       <p v-html="processedText"></p>

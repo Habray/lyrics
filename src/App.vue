@@ -2,6 +2,8 @@
 import { computed } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import { useRoute } from 'vue-router'
+import IconHamberger from '@/components/icons/IconHamberger.vue'
+import IconChevronRight from '@/components/icons/IconChevronRight.vue'
 
 const route = useRoute()
 const isHomeRoute = computed(() => route.name === 'home')
@@ -14,54 +16,13 @@ const isHomeRoute = computed(() => route.name === 'home')
 
       <div class="nav-top-container big-container-padding">
         <router-link :to="{ name: 'home' }">
-          <svg
-            v-if="isHomeRoute"
-            xmlns="http://www.w3.org/2000/svg"
-            x="0px"
-            y="0px"
-            width="50"
-            height="50"
-            viewBox="0,0,256,256"
-            style="fill: #000000"
-            class="nav-icon"
-          >
-            <g
-              fill="#ffffff"
-              fill-rule="nonzero"
-              stroke="none"
-              stroke-width="1"
-              stroke-linecap="butt"
-              stroke-linejoin="miter"
-              stroke-miterlimit="10"
-              stroke-dasharray=""
-              stroke-dashoffset="0"
-              font-family="none"
-              font-weight="none"
-              font-size="none"
-              text-anchor="none"
-              style="mix-blend-mode: normal"
-            >
-              <g transform="scale(5.12,5.12)">
-                <path
-                  d="M5,8c-0.72127,-0.0102 -1.39216,0.36875 -1.75578,0.99175c-0.36361,0.623 -0.36361,1.39351 0,2.01651c0.36361,0.623 1.0345,1.00195 1.75578,0.99175h40c0.72127,0.0102 1.39216,-0.36875 1.75578,-0.99175c0.36361,-0.623 0.36361,-1.39351 0,-2.01651c-0.36361,-0.623 -1.0345,-1.00195 -1.75578,-0.99175zM5,23c-0.72127,-0.0102 -1.39216,0.36875 -1.75578,0.99175c-0.36361,0.623 -0.36361,1.39351 0,2.01651c0.36361,0.623 1.0345,1.00195 1.75578,0.99175h40c0.72127,0.0102 1.39216,-0.36875 1.75578,-0.99175c0.36361,-0.623 0.36361,-1.39351 0,-2.01651c-0.36361,-0.623 -1.0345,-1.00195 -1.75578,-0.99175zM5,38c-0.72127,-0.0102 -1.39216,0.36875 -1.75578,0.99175c-0.36361,0.623 -0.36361,1.39351 0,2.01651c0.36361,0.623 1.0345,1.00195 1.75578,0.99175h40c0.72127,0.0102 1.39216,-0.36875 1.75578,-0.99175c0.36361,-0.623 0.36361,-1.39351 0,-2.01651c-0.36361,-0.623 -1.0345,-1.00195 -1.75578,-0.99175z"
-                ></path>
-              </g>
-            </g>
-          </svg>
+          <div v-if="isHomeRoute">
+            <IconHamberger />
+          </div>
 
-          <svg
-            v-else
-            width="50"
-            height="50"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 320 512"
-            class="nav-icon"
-          >
-            <path
-              fill="#ffffff"
-              d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
-            />
-          </svg>
+          <div v-else>
+            <IconChevronRight />
+          </div>
         </router-link>
         <h1 class="nav-heading--text">Lyrics</h1>
       </div>
@@ -92,7 +53,7 @@ const isHomeRoute = computed(() => route.name === 'home')
   align-items: center;
   column-gap: 40px;
 }
-.nav-top-container a {
+.nav-top-container a > div {
   display: flex;
   align-items: center;
 }
